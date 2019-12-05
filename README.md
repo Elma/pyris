@@ -87,6 +87,23 @@ See an [example of a app.yml file](https://github.com/garaud/pyris/blob/master/a
 
 Visit http://localhost:5555/pyris
 
+## Setup using docker
+
+```
+docker-compose build db
+docker-compose up db
+
+docker-compose build app
+
+#check the db
+docker-compose run --rm app psql -hdb -U pyris pyris -c "SELECT gid,depcom,nom_com,iris,typ_iris FROM geoiris LIMIT 10;"
+
+# start the containers
+docker-compose up
+```
+
+browse http://0.0.0.0:5555/doc/
+
 ## Requirements
 
 * postgresql

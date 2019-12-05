@@ -1,0 +1,16 @@
+db:
+    build: db/
+    environment:
+        - POSTGRES_USER=pyris
+        - POSTGRES_PASSWORD=pyris
+    ports:
+        - "5432:5432"
+app:
+    build: .
+    command: gunicorn -b 0.0.0.0:5555 --env PYRIS_APP_SETTINGS=./appdocker.yml pyris.api.run:app
+    volumes:
+        - .:/app
+    ports:
+        - "5555:5555"
+    links:
+        - db
