@@ -19,7 +19,11 @@ if _cfgfile is not None:
         cfg = yload(fobj.read(), Loader=FullLoader)
         DATABASE = cfg.get('database', {})
         ADDRESS_API = cfg.get('address', {'api': 'geodatagouv'})['api']
+
+        api_cfg = cfg.get('address')
+        ADDRESS_CONFIG = api_cfg[ADDRESS_API] if ADDRESS_API in api_cfg else {}
 else:
     DATABASE = {"USER": os.environ["USER"],
                 "HOST": "localhost"}
     ADDRESS_API = 'geodatagouv'
+    ADDRESS_CONFIG = {}

@@ -8,16 +8,16 @@ import slumber
 import sys
 
 class Address(object):
-    def factory(api):
-        if api == 'geodatagouv': return GeoDataGouv()
-        if api == 'nominatim': return Nominatim()
+    def factory(api, config={}):
+        if api == 'geodatagouv': return GeoDataGouv(config)
+        if api == 'nominatim': return Nominatim(config)
         assert 0, "Bad address creation: " + api
     factory = staticmethod(factory)
 
 class GeoDataGouv(Address):
     URL = "http://api-adresse.data.gouv.fr"
 
-    def __init__(self):
+    def __init__(self, config={}):
         self.api = slumber.API(self.URL)
 
 
@@ -53,8 +53,8 @@ class GeoDataGouv(Address):
 class Nominatim(Address):
     URL = "https://nominatim.openstreetmap.org"
 
-    def __init__(self):
-        self.api = slumber.API(self.URL)
+    def __init__(self, config={}):
+        self.api = slumber.API(config['url'] if 'url' in config else self.URL)
 
 
     def coordinate(self, address):
