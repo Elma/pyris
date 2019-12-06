@@ -21,3 +21,6 @@ uwsgi:
     touch: reload=~/pyris-app.reload
     daemonize: /var/log/uwsgi/app/pyris.log
     env: PYRIS_APP_SETTINGS=~/src/pyris/app.yml
+
+address:
+    api: geodatagouv

@@ -8,6 +8,7 @@ from flask_restplus import Resource, Api, apidoc, inputs
 from pyris import address
 from pyris.api import extract
 from pyris.api.insee import api as insee_api
+from pyris.config import ADDRESS_API
 
 
 Logger = logging.getLogger(__name__)
@@ -105,7 +106,8 @@ class IrisListFromQuery(Resource):
     def get(self, query):
         Logger.info("Looking for the list of iris in the city matching the query %s", query)
         Logger.info("Looking for longitude and latitude for the query %s", query)
-        coord=address.coordinate(query)
+        AddressClient = address.Address.factory(ADDRESS_API)
+        coord=AddressClient.coordinate(query)
         if coord["address"] is None:
             # Requests sent to '/api/search' that match nothing do not return a 404 error like other requests.
             # Is this an intentional choice?
@@ -153,8 +155,9 @@ class IrisFromAddress(Resource):
     def get(self):
         args = address_parser.parse_args()
         query = args['q']
-        Logger.info("Look for IRIS for address '%s'", address)
-        coord = address.coordinate(query)
+        Logger.info("Look for IRIS for address '%s'", query)
+        AddressClient = address.Address.factory(ADDRESS_API)
+        coord = AddressClient.coordinate(query)
         Logger.info("Get coordinate (%s, %s)", coord["lon"], coord["lat"])
         Logger.info("For address '%s'", coord["address"])
         if coord['address'] is None:

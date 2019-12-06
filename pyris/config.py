@@ -16,7 +16,10 @@ _cfgfile = os.environ.get('PYRIS_APP_SETTINGS')
 
 if _cfgfile is not None:
     with io.open(_cfgfile, 'r') as fobj:
-        DATABASE = yload(fobj.read(), Loader=FullLoader).get('database', {})
+        cfg = yload(fobj.read(), Loader=FullLoader)
+        DATABASE = cfg.get('database', {})
+        ADDRESS_API = cfg.get('address', {'api': 'geodatagouv'})['api']
 else:
     DATABASE = {"USER": os.environ["USER"],
                 "HOST": "localhost"}
+    ADDRESS_API = 'geodatagouv'
