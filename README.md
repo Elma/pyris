@@ -87,6 +87,22 @@ See an [example of a app.yml file](https://github.com/garaud/pyris/blob/master/a
 
 Visit http://localhost:5555/pyris
 
+## Address Api
+
+The address coordinates can be retrieve using the following apis
+
+ * *geo.api.gouv.fr* https://geo.api.gouv.fr/adresse
+ * *Nominatim* https://wiki.openstreetmap.org/wiki/FR:Nominatim#Param.C3.A8tres
+
+By default the *geo.api.gouv.fr* api is used. You can configure Nominatim updating your `app.yml` with
+
+``` yaml
+address:
+    api: nominatim # nominatim or geodatagouv
+    nominatim:
+        url: https://nominatim.openstreetmap.org # the url of the Nominatim instance to use
+```
+
 ## Requirements
 
 * postgresql
